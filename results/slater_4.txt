@@ -1,0 +1,48 @@
+RANKINGS: 53652
+2002 UPSETS: 62 75.78
+['PHI', 'TAM', 'GB', 'SFO', 'OAK', 'TEN', 'ATL', 'NYG', 'PIT', 'IND', 'CAR', 'CLE', 'NWE', 'BUF', 'MIA', 'BAL', 'DEN', 'JAX', 'WAS', 'SEA', 'KC', 'RAM', 'NYJ', 'CHR', 'CIN', 'ARI', 'MIN', 'DET', 'NOR', 'CHI', 'HOU', 'DAL']
+RANKINGS: 21964
+2003 UPSETS: 57 77.73
+['NWE', 'KC', 'IND', 'TEN', 'PHI', 'MIA', 'RAM', 'BAL', 'CAR', 'GB', 'SEA', 'NOR', 'DEN', 'DAL', 'CHI', 'BUF', 'NYJ', 'PIT', 'CLE', 'OAK', 'CIN', 'JAX', 'CHR', 'MIN', 'SFO', 'TAM', 'HOU', 'WAS', 'ATL', 'NYG', 'DET', 'ARI']
+RANKINGS: 4136
+2004 UPSETS: 55 78.52
+['PIT', 'NWE', 'PHI', 'IND', 'CHR', 'NYJ', 'GB', 'BUF', 'SEA', 'ATL', 'MIN', 'HOU', 'JAX', 'CIN', 'DEN', 'CAR', 'NOR', 'KC', 'OAK', 'BAL', 'DAL', 'WAS', 'DET', 'RAM', 'TAM', 'CHI', 'TEN', 'SFO', 'ARI', 'MIA', 'NYG', 'CLE']
+RANKINGS: 4977
+2005 UPSETS: 49 80.86
+['IND', 'DEN', 'JAX', 'SEA', 'PIT', 'CIN', 'CHI', 'TAM', 'CAR', 'ATL', 'MIN', 'NYG', 'WAS', 'DAL', 'PHI', 'KC', 'NWE', 'DET', 'CLE', 'MIA', 'CHR', 'ARI', 'OAK', 'TEN', 'BAL', 'SFO', 'GB', 'RAM', 'NOR', 'NYJ', 'BUF', 'HOU']
+RANKINGS: 3144
+2006 UPSETS: 62 75.78
+['CHR', 'CHI', 'BAL', 'IND', 'NWE', 'NYJ', 'NOR', 'PHI', 'DAL', 'BUF', 'GB', 'ATL', 'CIN', 'KC', 'SFO', 'SEA', 'DEN', 'PIT', 'TEN', 'NYG', 'HOU', 'RAM', 'MIN', 'CAR', 'TAM', 'WAS', 'JAX', 'MIA', 'CLE', 'OAK', 'ARI', 'DET']
+RANKINGS: 2656
+2007 UPSETS: 49 80.86
+['NWE', 'IND', 'DAL', 'GB', 'JAX', 'CHR', 'NYG', 'PIT', 'CLE', 'SEA', 'PHI', 'BUF', 'TEN', 'HOU', 'TAM', 'WAS', 'DET', 'MIN', 'CHI', 'CAR', 'NOR', 'DEN', 'CIN', 'BAL', 'NYJ', 'SFO', 'KC', 'OAK', 'ARI', 'RAM', 'ATL', 'MIA']
+RANKINGS: 17116
+2008 UPSETS: 59 76.95
+['TEN', 'PIT', 'BAL', 'CAR', 'MIA', 'NWE', 'ATL', 'NYG', 'DAL', 'IND', 'CHR', 'WAS', 'MIN', 'ARI', 'HOU', 'DEN', 'TAM', 'CHI', 'NOR', 'PHI', 'SFO', 'NYJ', 'CIN', 'CLE', 'BUF', 'KC', 'OAK', 'JAX', 'GB', 'SEA', 'RAM', 'DET']
+RANKINGS: 7797
+2009 UPSETS: 56 78.12
+['IND', 'CHR', 'NOR', 'PHI', 'MIN', 'GB', 'NWE', 'ATL', 'SFO', 'ARI', 'CIN', 'BAL', 'CHI', 'NYG', 'DAL', 'JAX', 'HOU', 'PIT', 'MIA', 'NYJ', 'TEN', 'SEA', 'DET', 'CLE', 'BUF', 'CAR', 'KC', 'WAS', 'DEN', 'OAK', 'RAM', 'TAM']
+RANKINGS: 1046
+2010 UPSETS: 62 75.78
+['NWE', 'ATL', 'BAL', 'PIT', 'TAM', 'CHI', 'NYJ', 'NOR', 'GB', 'PHI', 'IND', 'NYG', 'KC', 'JAX', 'MIN', 'BUF', 'DET', 'RAM', 'CLE', 'MIA', 'CIN', 'CHR', 'SFO', 'SEA', 'CAR', 'ARI', 'DAL', 'HOU', 'WAS', 'OAK', 'DEN', 'TEN']
+RANKINGS: 3108
+2011 UPSETS: 56 78.12
+['GB', 'NOR', 'NWE', 'SFO', 'DET', 'PIT', 'ATL', 'BAL', 'CIN', 'TEN', 'NYG', 'ARI', 'CAR', 'DAL', 'HOU', 'DEN', 'NYJ', 'CHR', 'MIA', 'BUF', 'OAK', 'KC', 'CHI', 'PHI', 'CLE', 'JAX', 'TAM', 'MIN', 'WAS', 'SEA', 'RAM', 'IND']
+RANKINGS: 6496
+2012 UPSETS: 60 76.56
+['ATL', 'DEN', 'SFO', 'NWE', 'HOU', 'IND', 'GB', 'CHI', 'WAS', 'BAL', 'DAL', 'CIN', 'MIN', 'TEN', 'NYG', 'NOR', 'TAM', 'CHR', 'DET', 'MIA', 'SEA', 'PIT', 'NYJ', 'RAM', 'BUF', 'ARI', 'CAR', 'PHI', 'CLE', 'OAK', 'KC', 'JAX']
+RANKINGS: 5518
+2013 UPSETS: 62 75.78
+['SEA', 'DEN', 'CAR', 'SFO', 'NWE', 'KC', 'NOR', 'PHI', 'ARI', 'CIN', 'IND', 'TEN', 'GB', 'DAL', 'BAL', 'NYJ', 'RAM', 'TAM', 'NYG', 'DET', 'OAK', 'MIA', 'ATL', 'MIN', 'WAS', 'CHI', 'PIT', 'JAX', 'HOU', 'CLE', 'CHR', 'BUF']
+RANKINGS: 48334
+2014 UPSETS: 52 79.69
+['DAL', 'SEA', 'GB', 'NWE', 'DEN', 'IND', 'ARI', 'DET', 'PHI', 'HOU', 'BAL', 'PIT', 'CIN', 'KC', 'CHR', 'MIA', 'BUF', 'MIN', 'CAR', 'CLE', 'CHI', 'NYJ', 'NYG', 'ATL', 'RAM', 'OAK', 'SFO', 'NOR', 'TAM', 'WAS', 'TEN', 'JAX']
+RANKINGS: 7815
+2015 UPSETS: 60 76.56
+['CAR', 'ARI', 'CIN', 'NWE', 'MIN', 'KC', 'DEN', 'GB', 'SEA', 'PIT', 'DET', 'OAK', 'NYJ', 'WAS', 'HOU', 'NOR', 'IND', 'CHI', 'TAM', 'ATL', 'CHR', 'JAX', 'PHI', 'NYG', 'BUF', 'DAL', 'MIA', 'BAL', 'RAM', 'CLE', 'SFO', 'TEN']
+RANKINGS: 4483
+2016 UPSETS: 54 78.91
+['NWE', 'DAL', 'PIT', 'KC', 'OAK', 'ATL', 'DEN', 'GB', 'NYG', 'DET', 'MIA', 'NOR', 'TAM', 'SEA', 'WAS', 'BAL', 'BUF', 'HOU', 'CIN', 'PHI', 'IND', 'MIN', 'CAR', 'ARI', 'TEN', 'NYJ', 'CLE', 'CHR', 'JAX', 'CHI', 'SFO', 'RAM']
+RANKINGS: 2244
+2017 UPSETS: 48 81.25
+['PHI', 'NWE', 'PIT', 'MIN', 'RAM', 'NOR', 'CAR', 'BUF', 'ATL', 'DET', 'GB', 'DAL', 'ARI', 'TAM', 'KC', 'JAX', 'CHR', 'WAS', 'SEA', 'SFO', 'CHI', 'BAL', 'OAK', 'NYG', 'MIA', 'TEN', 'CIN', 'DEN', 'IND', 'HOU', 'NYJ', 'CLE']
