@@ -61,9 +61,12 @@
 
 This is the introduction of a paper.
 
-\section{The Predictability of an NLF Game}
+\section{The Predictability of an NFL Game}
 
-Before looking at how accurate a ranking system can be in predicting the outcome of an NFL football game, it is good to start by looking at how predictable NFL games are in general. A lot of NFL games are actually closer than most people would initially assume. This is partially because blow-outs tend to stick in ones mind more than a 3 point win.[CITATION NEEDED?]\footnote{Except of course if it is ``your'' team playing against a big rival.} A quarter of NFL games are decided by 3 points or fewer, and in most seasons only a touchdown (and extra point) decide almost 50\% of NFL games. The percent of games won by a margin of victory or less can be found in Table \ref{table:margin_of_victory}.
+Before looking at how accurate a ranking system can be in predicting the outcome of an NFL football game, it is good to start by looking at how predictable NFL games are in general. If all NFL games are hard to predict, then there is no reason to think a ranking system will be successful. Unfortunately, there is no quantifiable measure how easy it is to predict the winner of an NFL game before it is played, but there are a number of proxies for the predictability. The most obvious and straightforward is to look at the margin-of-victory, or the absolute difference in the scores. One would expect that if the margin-of-victory of NFL games is large, than it is probably easier to predict the winner before the game is played.
+
+Examining all of the games played between 2002 and 2017 inclusive, approximately 25\% of NFL games are decided by 3 points or fewer, and in most seasons only eight points decide 50\% of NFL games. The percent of games won by a margin-of-victory or less can be found in Table \ref{table:margin_of_victory}.
+
 
 \begin{table}[!htb]
 \begin{center}
@@ -75,12 +78,12 @@ MOV & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 \\
 1 & 3.9 & 3.5 & 3.9 & 4.7 & 3.1 & 2.3 & 4.3 & 3.1\\
 2 & 8.6 & 7.4 & 5.5 & 9.0 & 7.4 & 5.5 & 9.0 & 5.9\\
 3 & \textbf{24.6} & \textbf{23.4} & \textbf{23.8} & \textbf{23.4} & \textbf{23.8} & 21.5 & 19.5 & 21.1\\
-4 & 28.5 & 28.1 & 27.3 & 30.1 & \textbf{26.9} & \textbf{24.6} & 28.5 & \textbf{25.8}\\
-5 & 31.2 & 30.9 & 31.2 & 32.4 & 29.7 & \textbf{26.9} & 31.2 & 28.1\\
+4 & 28.5 & 28.1 & 27.3 & 30.1 & 26.9 & \textbf{24.6} & \textbf{28.5} & \textbf{25.8}\\
+5 & 31.2 & 30.9 & 31.2 & 32.4 & 29.7 & 26.9 & 31.2 & 28.1\\
 6 & 37.9 & 36.7 & 35.5 & 38.3 & 35.9 & 32.4 & 35.2 & 33.2\\
 7 & \textbf{49.2} & \textbf{48.4} & 45.3 & 44.5 & 45.7 & 43.0 & 44.9 & 43.0\\
-8 & 53.5 & \textbf{51.6} & 47.3 & \textbf{48.0} & \textbf{49.2} & 46.9 & 46.1 & 46.9\\
-9 & 54.7 & 52.7 & \textbf{48.0} & \textbf{49.2} & \textbf{50.8} & \textbf{48.4} & \textbf{50.8} & 47.7\\
+8 & 53.5 & \textbf{51.6} & 47.3 & 48.0 & \textbf{49.2} & 46.9 & 46.1 & 46.9\\
+9 & 54.7 & 52.7 & \textbf{48.0} & \textbf{49.2} & \textbf{50.8} & \textbf{48.4} & \textbf{50.8} & \textbf{47.7}\\
 10 & 60.2 & 57.0 & 57.0 & 56.2 & 57.8 & 53.5 & 57.0 & 53.9\\
 14 & 71.1 & 68.0 & 72.3 & 70.7 & 70.3 & 66.4 & 65.6 & 66.0\\
 21 & 86.7 & 84.8 & 85.9 & 85.2 & 85.9 & 84.4 & 82.8 & 79.7\\
@@ -96,12 +99,12 @@ MOV & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & 2016 & 2017 \\
 1 & 3.5 & 3.1 & 5.1 & 5.9 & 4.3 & 3.1 & 7.0 & 1.9\\
 2 & 7.0 & 5.9 & 9.0 & 10.6 & 9.4 & 6.2 & 11.7 & 4.7\\
 3 & \textbf{25.4} & 19.5 & 22.3 & \textbf{25.4} & 20.7 & \textbf{23.1} & \textbf{24.2} & 21.1\\
-4 & 31.6 & \textbf{26.2} & 27.3 & 32.4 & \textbf{24.2} & 27.7 & 28.9 & \textbf{24.6}\\
-5 & 35.5 & 30.1 & 30.1 & 34.4 & \textbf{26.9} & 31.6 & 34.4 & 29.7\\
+4 & 31.6 & \textbf{26.2} & \textbf{27.3} & 32.4 & \textbf{24.2} & 27.7 & 28.9 & \textbf{24.6}\\
+5 & 35.5 & 30.1 & 30.1 & 34.4 & 26.9 & 31.6 & 34.4 & 29.7\\
 6 & 40.2 & 37.1 & 36.7 & 39.5 & 32.0 & 41.0 & 41.8 & 37.1\\
-7 & 47.3 & \textbf{48.8} & 46.9 & \textbf{48.0} & 38.3 & \textbf{51.2} & 52.7 & 43.4\\
-8 & \textbf{51.2} & \textbf{51.6} & \textbf{51.2} & \textbf{51.2} & 43.0 & 54.7 & 57.0 & 47.3\\
-9 & \textbf{52.0} & 52.3 & \textbf{52.0} & \textbf{52.0} & 44.9 & 55.9 & 59.4 & \textbf{50.4}\\
+7 & 47.3 & \textbf{48.8} & 46.9 & 48.0 & 38.3 & \textbf{51.2} & \textbf{52.7} & 43.4\\
+8 & \textbf{51.2} & 51.6 & \textbf{51.2} & \textbf{51.2} & 43.0 & 54.7 & 57.0 & 47.3\\
+9 & 52.0 & 52.3 & 52.0 & 52.0 & 44.9 & 55.9 & 59.4 & \textbf{50.4}\\
 10 & 57.8 & 57.4 & 58.2 & 58.6 & \textbf{50.4} & 61.3 & 62.5 & 56.2\\
 14 & 67.6 & 69.1 & 67.2 & 69.5 & 64.5 & 73.4 & 73.4 & 68.8\\
 21 & 83.6 & 81.2 & 83.2 & 84.8 & 82.8 & 85.9 & 90.6 & 84.8\\
@@ -112,75 +115,154 @@ MOV & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & 2016 & 2017 \\
 56 & 100.0 & 100.0 & 99.6 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0\\
 \hline
 \end{tabular}
-\caption{Percent of games won by a margin of victory or less.}\label{table:margin_of_victory}
+\caption{Percent of games won by a margin-of-victory or less.}\label{table:margin_of_victory}
 \end{center}
 \end{table}
 
-Diving a bit deeper into the numbers, we can use halftime scores as compared to the outcome of the game as a indication of how hard it is to predict the winner of a game. If two teams are very closely matched, it would not be surprising that 50\% of the time the team that is leading at halftime is not necessarily the team that wins. After looking at the data for NFL games, we find that on average 25\% of the games end with the winning team losing at halftime. Table \ref{table:halftime_flip_flop} shows the percent of games played that season where the winner at halftime was the overall loser of the game. Extrapolating, we can say that on average 50\% of the games played in the NFL are between two closely matched teams.
-
-\begin{table}[!htb]
-\begin{center}
-\scriptsize
-\begin{tabular}{|c|c|}
-\hline
-2000 & 22.58\\
-2001 & 22.58\\
-2002 & 25.00\\
-2003 & 26.17\\
-2004 & 24.61\\
-2005 & 25.39\\
-2006 & 26.56\\
-2007 & 23.05\\
-2008 & 24.61\\
-2009 & 18.75\\
-2010 & 25.39\\
-2011 & 25.00\\
-2012 & 25.39\\
-2013 & 25.00\\
-2014 & 30.47\\
-2015 & 26.17\\
-\hline
-\textbf{Average} & \textbf{24.80}\\
-\hline
-\end{tabular}
-\caption{Percent of games where the losing team was ahead at halftime.}\label{table:halftime_flip_flop}
-\end{center}
-\end{table}
-
-Gambling provides us with another measure of how difficult it is to predict the winner of an NFL game. While the point spread established by casinos and bookies does not necessarily represent an adjustment to the scores to make the outcome equal. However, it does represent the betting publics consensus on who will win the game. Spreads are established to promote an equal amount of money being bet on both teams. With all of the money and ``expertise'' that goes into betting on NFL games, one would think that the favorite would almost always win. However, on average the favorite only wins 66\% of the time. Table \ref{table:favorite_wins} shows the complete season-by-season results.
+The mean and median margin-of-victory by year, and for the whole data set, can be found in Table \ref{table:margin_of_victory_stat}. If you consider scoring in an NFL game to come in increments of 3 (a touchdown being $2 \times 3$), then the average game is decided by $4 \times 3$ and the median game by $3 \times 3$. With score differences of 3 and 4, using margin-of-victory as a proxy for the predictability of an NFL game would \emph{seem} to indicate that predicting the outcome of a game is not terribly difficult.
 
 \begin{table}[!htb]
 \begin{center}
 \scriptsize
 \begin{tabular}{|c|c|c|}
 \hline
-Year & Favorite Won & Favorite Covered\\
+Year & Mean & Median\\
 \hline
-2000 & 64.52 & 45.97\\
-2001 & 66.13 & 45.56\\
-2002 & 62.50 & 43.36\\
-2003 & 67.58 & 48.83\\
-2004 & 65.63 & 48.05\\
-2005 & 74.22 & 56.25\\
-2006 & 59.38 & 42.58\\
-2007 & 69.14 & 50.78\\
-2008 & 68.36 & 48.05\\
-2009 & 69.53 & 47.27\\
-2010 & 66.02 & 48.05\\
-2011 & 66.41 & 45.70\\
-2012 & 64.06 & 46.48\\
-2013 & 68.75 & 49.61\\
-2014 & 67.58 & 48.44\\
-2015 & 63.28 & 46.88\\
+2002 & 11.11 & 8.00\\
+2003 & 11.89 & 8.00\\
+2004 & 11.37 & 10.00\\
+2005 & 11.69 & 10.00\\
+2006 & 11.43 & 9.00\\
+2007 & 12.47 & 10.00\\
+2008 & 12.22 & 9.00\\
+2009 & 12.97 & 10.00\\
+2010 & 11.75 & 8.00\\
+2011 & 12.05 & 8.00\\
+2012 & 12.15 & 8.00\\
+2013 & 11.29 & 8.00\\
+2014 & 12.67 & 10.00\\
+2015 & 11.06 & 7.00\\
+2016 & 10.23 & 7.00\\
+2017 & 11.81 & 9.00\\
 \hline
-Average & 66.44 & 47.62\\
+Total & 11.76 & 9.00\\
+\hline
+\end{tabular}
+\caption{Mean and median margin of victory by year and across the whole data set.}\label{table:margin_of_victory_stat}
+\end{center}
+\end{table}
+
+Another obvious proxy for the predictability of an NFL game is to look at the win/loss records of both teams before they play. The team with the better win/loss ratio\footnote{The ratio considered is win/(win+loss) to normalize across teams that have played a different number of games.} \emph{should} be predicted to win the game, if predicting the outcome is easy. Across the entire data set, using win/loss ratio to predict the outcome is 70\% correct. Table \ref{table:win_loss_upsets} shows the number of upsets and the percent correct year-by-year.
+
+\begin{table}[!htb]
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|}
+\hline
+Year & Upsets & \% Correct\\
+\hline
+2002 & 84 & 67.19\\
+2003 & 72 & 71.88\\
+2004 & 74 & 71.09\\
+2005 & 67 & 73.83\\
+2006 & 79 & 69.14\\
+2007 & 65 & 74.61\\
+2008 & 72 & 71.88\\
+2009 & 76 & 70.31\\
+2010 & 86 & 66.41\\
+2011 & 73 & 71.48\\
+2012 & 76 & 70.31\\
+2013 & 76 & 70.31\\
+2014 & 67 & 73.83\\
+2015 & 77 & 69.92\\
+2016 & 74 & 71.09\\
+2017 & 74 & 71.09\\
+\hline
+Total & 1192 & 70.90\\
+\hline
+\end{tabular}
+\caption{Upsets and \% correct based upon win/loss ratio.}\label{table:win_loss_upsets}
+\end{center}
+\end{table}
+
+Gambling provides us with another proxy of the predictability of an NFL game. While the point spread established by casinos and bookies does not represent an adjustment to the scores to make the outcome equal, it does represent the betting publics consensus on who they think will win the game. Spreads are established to promote an equal amount of money being bet on each teams. With all of the money and ``expertise'' that goes into betting on NFL games, one would think that the favorite would almost always win. However, across the entire data set, the favorite only one 66.85\% of the time. This is 4.05\% worse than going with the team with a higher win/loss ratio. Table \ref{table:favorite_wins} shows the number of upsets and the percent correct year-by-year.
+
+\begin{table}[!htb]
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|}
+\hline
+Year & Upset & \% Correct\\
+\hline
+2002 & 95 & 62.89\\
+2003 & 83 & 67.58\\
+2004 & 88 & 65.62\\
+2005 & 66 & 74.22\\
+2006 & 104 & 59.38\\
+2007 & 79 & 69.14\\
+2008 & 80 & 68.75\\
+2009 & 78 & 69.53\\
+2010 & 87 & 66.02\\
+2011 & 86 & 66.41\\
+2012 & 91 & 64.45\\
+2013 & 79 & 69.14\\
+2014 & 82 & 67.97\\
+2015 & 94 & 63.28\\
+2016 & 91 & 64.45\\
+2017 & 75 & 70.70\\
+\hline
+Total & 1358 & 66.85\\
 \hline
 \end{tabular}
 \caption{Percent of games won by the favorite.}\label{table:favorite_wins}
 \end{center}
 \end{table}
 
-Taking into account the point spread, we can see that the favorite does not consistently cover the point spread set by the casinos. So while the betting public can identify the favorite more often than not, the magnitude of the victory is harder to identify. This makes sense given the numbers in Table \ref{table:margin_of_victory} and \ref{table:halftime_flip_flop}. On average, a team scores 21.625 points per game,\footnote{$\stddev = 10.395$} so this leaves little room for inaccuracies when predicting the outcome of a game. 
+One last proxy for how easy it is to predict the outcome of an NFL game, is to look at how often a team beats another team twice in the same season. If teams are consistent in there performances, then predicting the outcome is easy: the same team should win twice-in-a-row. However, across the entire data set, that only occurs 57.91\% of the time. Table \ref{table:won_twice} has the year-by-year stats.
+
+\begin{table}[!htb]
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|}
+\hline
+Year & \% Won Twice\\
+\hline
+2002 & 62.50\\
+2003 & 52.08\\
+2004 & 58.33\\
+2005 & 66.67\\
+2006 & 60.42\\
+2007 & 62.50\\
+2008 & 47.92\\
+2009 & 64.58\\
+2010 & 45.83\\
+2011 & 62.50\\
+2012 & 53.19\\
+2013 & 48.94\\
+2014 & 60.42\\
+2015 & 56.25\\
+2016 & 59.57\\
+2017 & 64.58\\
+\hline
+Total & 57.91\\
+\hline
+\end{tabular}
+\caption{Percent of times a team won twice against the same team.}\label{table:won_twice}
+\end{center}
+\end{table}
+
+Given that the average NFL game from 2002 to 2017 was won by over 11 points, the team that has a better win/loss ratio won 70\% of the time, and the favorite won 67\% of the time, one could conclude that predicting the winner of an NFL game more often than not is possible. It still remains if using rankings, made up of a number of factors, is a good way to predict the outcome.
+
+\section{Slater Ranking and the Minimum Feedback Arc Set}
+
+In \cite{biometrika_slater} Patric Slater introduced a rule for computing a ranking given an inconsistent set of preferences for paired comparisons. Preferences are never inconsistent across the same pairs of choices, but do not following the property of transitivity. His rule is to rank alternatives such that the number of pairs that disagree with the ranking is minimized. In applying Slater's rule to NFL games, consider two teams playing each other the comparison, and the preference the winner of the game. The goal is to derive a ranking of the teams such that the number of upsets, where a higher ranked team loses to a lower ranked team, is minimized. The definition for Slater Ranking is formalized in Definition \ref{def:slater_ranking}. Such a ranking is the optimal ranking for a given season, and is used to compare against various other rankings in Section \ref{section:comparison}.
+
+\begin{definition}\label{def:slater_ranking}
+Given a ranking of the teams in a given NFL season, if $i < j$, then team $i$ is ranked as a better team than team $j$. The notation $T_i \rightarrow T_j$ is used to denote team $T_i$ beating team $T_j$. A Slater Ranking is the ranking that minimizes the occurrences of $T_j \rightarrow T_i$ in the season.
+\end{definition}
+
+A Slater Ranking is another name for finding the Minimum Feedback Arc Set for a graph.
+There are numerous papers that prove computing a Slater Ranking is NP-hard in almost all configurations of pairwise comparisons: tournament, absence of pairwise ties, etc. As such, computing a Slater Ranking for an NFL season, with 32 teams, would require testing all $32! \approx 2^{117}$ possible rankings of the teams. This is obviously computationally infeasible with today's computers, so a linear approximation algorithm for the Minimum Feedback Arc Set problem is used.
 
 \section{Ranking Systems to Predict Outcomes}
 
@@ -225,7 +307,7 @@ Year & \multicolumn{1}{|c|}{System} & \% Correct & Against Spread\\
 \end{table}
 
 
-\section{Optimal Final Ranking}
+\section{Optimal Final Ranking}\label{section:comparison}
 
 Throughout the 17 weeks of an NFL season, many things can happen that alter the performance of a team. For example, in 2007 the New England Patriots went 16-0\cite{ESPN:ne_2007} in the regular season making them one of the best teams in this history of the game. However, in the first game of the 2008 season their MVP quarterback sustained a knee injury that would keep him from playing for the entire 2008 season.\cite{wiki:tom_brady} Their record that season was a still impressive 11-5\footnote{Tied with the Miami Dolphins for first place in the AFC East.}.\cite{ESPN:ne_2008} While the ability of a team is constantly in flux throughout the season because of injuries, trades, and extra curricular activites off the field, there is an expectation that for any given year, comparing two teams once can be considered better than the other. There are plenty of instances where two teams play each other twice in a season with each team taking home a win. However, if the teams were to play each other enough times in a given season, it would be expected that one team would generally win more games than the other.
 
