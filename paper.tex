@@ -8,6 +8,9 @@
 \usepackage{nameref}
 \usepackage{float}
 
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{varwidth}
 
 % these two lines will give you double spacing in the document (only for editing)
 %\usepackage{setspace}
@@ -255,16 +258,80 @@ Given that the average NFL game from 2002 to 2017 was won by over 11 points, the
 
 \section{Slater Ranking and the Minimum Feedback Arc Set}
 
-In \cite{biometrika_slater} Patric Slater introduced a rule for computing a ranking given an inconsistent set of preferences for paired comparisons. Preferences are never inconsistent across the same pairs of choices, but do not following the property of transitivity. His rule is to rank alternatives such that the number of pairs that disagree with the ranking is minimized. In applying Slater's rule to NFL games, consider two teams playing each other the comparison, and the preference the winner of the game. The goal is to derive a ranking of the teams such that the number of upsets, where a higher ranked team loses to a lower ranked team, is minimized. The definition for Slater Ranking is formalized in Definition \ref{def:slater_ranking}. Such a ranking is the optimal ranking for a given season, and is used to compare against various other rankings in Section \ref{section:comparison}.
+In \cite{biometrika_slater} Patric Slater introduced a rule for computing a ranking given an inconsistent set of preferences for paired comparisons. Preferences are never inconsistent across the same pairs of choices, but do not following the property of transitivity. His rule is to rank alternatives such that the number of pairs that disagree with the ranking is minimized. In applying Slater's rule to NFL games, consider two teams playing each other the comparison, and the preference the winner of the game. The goal is to derive a ranking of the teams such that the number of upsets, where a higher ranked team loses to a lower ranked team, is minimized. Slater Ranking, for the purposes of this paper, is defined in Definition \ref{def:slater_ranking}. Such a ranking is the optimal ranking for a given season, and is used to compare against various other rankings in Section \ref{section:comparison}.
 
 \begin{definition}\label{def:slater_ranking}
-Given a ranking of the teams in a given NFL season, if $i < j$, then team $i$ is ranked as a better team than team $j$. The notation $T_i \rightarrow T_j$ is used to denote team $T_i$ beating team $T_j$. A Slater Ranking is the ranking that minimizes the occurrences of $T_j \rightarrow T_i$ in the season.
+Given a ranking of the teams in a given NFL season, if $i < j$, then team $i$ is ranked higher (is a better team) than team $j$. An upset occurs when a team, $T_j$, with a worse ranking beats a team, $T_i$, with a better ranking. A Slater Ranking is the ranking of all teams for a given season that minimizes the number of upsets, or occurrences when $T_j$ beats $T_i$ in the season.
 \end{definition}
 
-A Slater Ranking is another name for finding the Minimum Feedback Arc Set for a graph.
-There are numerous papers that prove computing a Slater Ranking is NP-hard in almost all configurations of pairwise comparisons: tournament, absence of pairwise ties, etc. As such, computing a Slater Ranking for an NFL season, with 32 teams, would require testing all $32! \approx 2^{117}$ possible rankings of the teams. This is obviously computationally infeasible with today's computers, so a linear approximation algorithm for the Minimum Feedback Arc Set problem is used.
+One way to compute the Slater Ranking for a given NFL season, is to consider each team a node in a directed graph, an edge from one node to another an indication of a victory, and then to compute the Minimum Feedback Arc Set (MFAS). The MFAS is the fewest number of edges that must be removed from the graph to remove all cycles from the graph. In our case, a graph with no cycles would establish an ordering, or ranking of the teams such that there are no upsets. This ranking is equivalent to the Slater Ranking defined in Definition \ref{def:slater_ranking}.
 
-\section{Ranking Systems to Predict Outcomes}
+Unfortunately, the MFAS is an NP-hard problem; its NP-complete version was one of Karp's original 21 NP-complete problems \cite{karp_complexity}. Computing an exact solution with 32 teams would require testing all $32! \approx 2^{117}$ possible rankings of the teams. This is obviously computationally infeasible with today's computers, so an approximation algorithm must be used. Unfortunately, again, MFAS falls into the APX-hard complexity class \cite{kann_approx}, which means that every polynomial-time approximation algorithm will sometimes return an edge set that is $c$ times larger than optimal for some $c > 1$.
+
+Despite these setbacks, the linear approximation algorithm in \cite{Saab2001} was used to compute the Slater Ranking for the teams for each year from 2002 to 2017 inclusive. A small modification to the algorithm was made to increase the accuracy of the algorithm, at the cost of additional searching. The original algorithm picks a node $u$ with the maximum $\delta(u)$, where $\delta(u) = \text{out degree}(u) - \text{in degree}(u)$. There is no mention in \cite{Saab2001} of breaking ties amongst nodes that share the maximum $\delta$. The modification used in this paper explores a fixed number of such nodes. The exploration is limited to at most 4 nodes. The value of 4 was used based upon experimentation with the graphs constructed for each NFL season, to limit the number of paths explored to a reasonable number. The modified approximation algorithm returns a set of possible rankings, and is defined in Algorithm \ref{algo:slater_ranking}. The number of upsets for each ranking is computed, and the ranking with the fewest upsets is used as the Slater Ranking for that season. It should be noted that there is still an element of randomness to the algorithm, as there are often more than 4 nodes that all share the maximum $\delta$. The first 4 nodes are used, but as there is no ordering to the nodes, results will differ.
+
+\begin{algorithm}[!htb]
+\texttt{slater\_rank}($G$, $s_1$, $s_2$):\newline
+\hspace*{2em} $R \gets \varnothing$\newline
+
+\hspace*{2em} \texttt{while} $G \ne \varnothing$:\newline
+\hspace*{4em} \texttt{while} $G$ contains a sink:\newline
+\hspace*{6em} choose a sink $u$\newline
+\hspace*{6em} $s_2 \gets u \parallel s_2$\newline
+\hspace*{6em} $G \gets G - u$\newline
+
+\hspace*{4em} \texttt{while} $G$ contains a source:\newline
+\hspace*{6em} choose a source $u$\newline
+\hspace*{6em} $s_1 \gets s_1 \parallel u$\newline
+\hspace*{6em} $G \gets G - u$\newline
+
+\hspace*{4em} \texttt{if} $G \ne \varnothing$:\newline
+\hspace*{6em} $U$ = all nodes $u$ for which $\delta(u)$ is the maximum\newline
+\hspace*{6em} \texttt{for} $i = 0 \ldots 4$:\newline
+\hspace*{8em} $s_{1 new} \gets s_1 \parallel U_i$\newline
+\hspace*{8em} $G_{new} \gets G - U_i$\newline
+\hspace*{8em} $R \gets$ \texttt{slater\_rank}($G_{new}$, $s_{1new}$, $s_2$)\newline
+
+\hspace*{2em} \texttt{return} $R$\newline
+\caption{Modified approximation algorithm that finds a set of candidate Slater Rankings for an NFL season.}\label{algo:slater_ranking}
+\end{algorithm}
+
+
+\section{Comparing Various Ranking Systems to the Slater Ranking}
+
+Running the algorithm described in \ref{algo:slater_ranking} for each year results in the data found in Table \ref{table:slater_ranking_year}.\footnote{For the actual ranking of the teams, see Table \ref{table:full_slater_ranking} in \ref{app:slater_ranking}.} Across the entire data set, the Slater Ranking was correct 77.98\% of the time. The best ranking system for each year found at \cite{} is compared year-by-year to the Slater Ranking to see how they compare. The results can be found in Table \ref{}.
+
+\begin{table}[!htb]
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|}
+\hline
+Year & Upsets & \% Correct\\
+\hline
+2002 & 62 & 75.78\\
+2003 & 57 & 77.73\\
+2004 & 55 & 78.53\\
+2005 & 49 & 80.86\\
+2006 & 61 & 76.17\\
+2007 & 49 & 80.86\\
+2008 & 59 & 76.95\\
+2009 & 56 & 78.12\\
+2010 & 61 & 76.17\\
+2011 & 55 & 78.52\\
+2012 & 60 & 76.56\\
+2013 & 62 & 75.78\\
+2014 & 52 & 79.69\\
+2015 & 60 & 76.56\\
+2016 & 54 & 78.19\\
+2017 & 48 & 81.25\\
+\hline
+ & Mean & 77.98\\
+\hline
+\end{tabular}
+\caption{Slater Ranking by Year}\label{table:slater_ranking_year}
+\end{center}
+\end{table}
+
 
 Below are the top raking systems, and their percent correct by year
 
@@ -319,51 +386,6 @@ Given a ranking of the teams in a given NFL season, where $i < j$, team $i$ is r
 
 Unfortunately, finding a Slater Ranking is an NP-Hard problem \cite{combinatorics_charbit} \cite{discrete_math_alon}. Therefore, constructing a perfectly optimal ranking would require finding the minimum number of upsets after testing $32! \approx 2.63 \times 10^{35}$ different rankings. To make the problem tractible, a greedy algorithm was used after exhausting all possible combinations and permutations of three teams occupying the top three spots in the ranking. The greedy algorithm takes the team with the fewest number of losses, excluding losses to teams already ranked, and assigns that team the next ranking. This resulted in picking the ranking that resulted in the minimum number of upsets after considering 29,760 rankings\footnote{In 2000 and 2001 there were only 31 NFL teams, reducing the number of rankings to 26,970.} for each season. The results of these rankings can be found in Table \ref{table:optimal_ranking}.
 
-\begin{table}[!htb]
-\begin{center}
-\scriptsize
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
- & 2000 & 2001 & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014\\
-\hline
-$\%$ Correct & $76$ & $76$ & $75$ & $76$ & $77$ & $80$ & $75$ & $79$ & $77$ & $79$ & 73 & 77 & 75 & 74 & 79\\
-1 & IND & GB & CLE & STL & PIT & SEA & SD & JAX & TEN & PIT & NYG & GB & SEA & CHI & PIT\\
-2 & TAM & OAK & MIA & NWE & NWE & KC & IND & TAM & ATL & HOU & KC & OAK & MIN & PIT & KC\\
-3 & STL & BAL & SFO & DAL & NOR & CAR & DEN & ARI & CHI & MIN & NOR & SFO & ATL & IND & SEA\\
-4 & MIN & CHI & OAK & PHI & PHI & IND & BAL & NWE & IND & GB & NWE & NOR & DEN & DEN & GB\\
-5 & MIA & STL & TEN & KC & IND & DEN & NWE & DAL & PIT & SD & PIT & DET & SFO & SEA & NWE\\
-6 & BUF & SFO & PIT & GB & BAL & JAX & CHI & GB & BAL & IND & ATL & CHI & GB & KC & DEN\\
-7 & DET & PHI & IND & DEN & NYJ & NWE & BUF & NYG & MIN & BAL & BAL & ATL & CHI & SFO & ARI\\
-8 & NYG & PIT & PHI & IND & BUF & PIT & NYJ & WAS & HOU & DAL & TAM & PIT & NWE & ARI & SD\\
-9 & TEN & TAM & TAM & TEN & SD & CIN & TEN & SD & CAR & NOR & CHI & NWE & HOU & TEN & IND\\
-10 & PHI & NYJ & GB & MIA & CIN & CHI & CIN & IND & NYG & PHI & NYJ & SD & IND & CAR & CIN\\
-11 & BAL & MIA & ATL & BUF & CLE & TAM & PIT & TEN & NWE & DEN & GB & DEN & TEN & STL & BAL\\
-12 & PIT & NWE & BAL & CAR & GB & ATL & KC & HOU & MIA & NYG & MIN & MIN & DET & NOR & DET\\
-13 & NYJ & IND & DEN & NYJ & DAL & MIN & MIA & CAR & ARI & NWE & BUF & CAR & STL & NWE & MIA\\
-14 & GB & ATL & NYG & BAL & WAS & DET & JAX & DET & DAL & ATL & CLE & BAL & BUF & CIN & BUF\\
-15 & CHI & NOR & NWE & JAX & SEA & BAL & NOR & DEN & CIN & MIA & MIA & CIN & ARI & GB & NYJ\\
-16 & NWE & BUF & JAX & NOR & MIN & CLE & PHI & PIT & WAS & TEN & CIN & HOU & MIA & BAL & MIN\\
-17 & DAL & CAR & KC & HOU & HOU & GB & GB & BUF & PHI & SFO & CAR & TEN & NYJ & NYJ & CHI\\
-18 & WAS & MIN & NYJ & TAM & JAX & MIA & NYG & CLE & CLE & ARI & DET & CLE & JAX & TAM & SFO\\
-19 & CIN & NYG & BUF & NYG & DET & SD & DAL & SEA & JAX & CHI & PHI & JAX & BAL & ATL & DAL\\
-20 & JAX & KC & WAS & WAS & CHI & NYG & HOU & PHI & GB & SEA & SFO & TAM & CIN & BUF & PHI\\
-21 & ARI & SEA & SEA & ATL & NYG & WAS & CLE & MIN & SFO & JAX & SEA & IND & WAS & MIA & NYG\\
-22 & DEN & DEN & STL & SEA & ATL & NOR & MIN & CHI & BUF & STL & STL & SEA & DAL & CLE & STL\\
-23 & OAK & SD & SD & CHI & DEN & NYJ & CAR & OAK & SEA & NYJ & ARI & ARI & NYG & JAX & HOU\\
-24 & CLE & DAL & ARI & CLE & CAR & BUF & ATL & KC & STL & BUF & SD & PHI & CLE & HOU & WAS\\
-25 & NOR & WAS & HOU & PIT & KC & OAK & TAM & CIN & SD & CAR & DAL & NYG & PIT & SD & OAK\\
-26 & ATL & ARI & DAL & ARI & OAK & DAL & WAS & BAL & DEN & CIN & WAS & DAL & PHI & DAL & JAX\\
-27 & CAR & JAX & CAR & CIN & TEN & PHI & SEA & NYJ & NYJ & DET & IND & STL & TAM & NYG & CLE\\
-28 & SFO & CIN & CIN & SD & MIA & ARI & STL & MIA & NOR & CLE & JAX & MIA & CAR & MIN & TEN\\
-29 & KC & TEN & MIN & OAK & STL & TEN & ARI & STL & OAK & KC & DEN & NYJ & SD & PHI & ATL\\
-30 & SEA & CLE & DET & MIN & TAM & SFO & SFO & NOR & TAM & WAS & HOU & BUF & OAK & DET & CAR\\
-31 & SD & DET & NOR & SFO & SFO & STL & OAK & ATL & KC & OAK & TEN & KC & KC & WAS & NOR\\
-32 & & & CHI & DET & ARI & HOU & DET & SFO & DET & TAM & OAK & WAS & NOR & OAK & TAM\\
-\hline
-\end{tabular}
-\caption{Optimal ranking of teams by season}\label{table:optimal_ranking}
-\end{center}
-\end{table}
 
 
 \begin{itemize}
@@ -385,16 +407,62 @@ $\%$ Correct & $76$ & $76$ & $75$ & $76$ & $77$ & $80$ & $75$ & $79$ & $77$ & $7
 
 \bibliography{paper}
 
-%\newpage
-%\appendix
-%\thispagestyle{plain}
-%\onecolumn
+\newpage
+\appendix
+\thispagestyle{plain}
+\onecolumn
 
 % This will put "Appendix" before the letter... it's a nice touch, just watch when you reference things
-%\newcommand{\appsection}[1]{\let\oldthesection\thesection
-%  \renewcommand{\thesection}{Appendix \oldthesection}
-%  \section{#1}\let\thesection\oldthesection}
+\newcommand{\appsection}[1]{\let\oldthesection\thesection
+  \renewcommand{\thesection}{Appendix \oldthesection}
+  \section{#1}\let\thesection\oldthesection}
   
-%\appsection{}
+\appsection{Slater Ranking by Season}\label{app:slater_ranking}
+
+\begin{table}[!htb]
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Rank & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & 2016 & 2017\\
+ \hline
+1 & PHI & NWE & PIT & IND & CHR & NWE & TEN & IND & NWE & GB & ATL & SEA & DAL & CAR & NWE & PHI\\
+2 & TAM & KC & NWE & DEN & CHI & IND & PIT & CHR & ATL & NOR & DEN & DEN & SEA & ARI & DAL & NWE\\
+3 & GB & IND & PHI & JAX & BAL & DAL & BAL & NOR & BAL & NWE & SFO & CAR & GB & CIN & PIT & PIT\\
+4 & SFO & TEN & IND & SEA & IND & GB & CAR & PHI & PIT & SFO & NWE & SFO & NWE & NWE & KC & MIN\\
+5 & OAK & PHI & CHR & PIT & NWE & JAX & MIA & MIN & TAM & DET & HOU & NWE & DEN & MIN & OAK & RAM\\
+6 & TEN & MIA & NYJ & CIN & NYJ & CHR & NWE & GB & CHI & PIT & IND & KC & IND & KC & ATL & NOR\\
+7 & ATL & RAM & GB & CHI & NOR & NYG & ATL & NWE & NYJ & ATL & GB & NOR & ARI & DEN & DEN & CAR\\
+8 & NYG & BAL & BUF & TAM & PHI & PIT & NYG & ATL & NOR & BAL & CHI & PHI & DET & GB & GB & BUF\\
+9 & PIT & CAR & SEA & CAR & DAL & CLE & DAL & SFO & GB & CIN & WAS & ARI & PHI & SEA & NYG & ATL\\
+10 & IND & GB & ATL & ATL & TEN & SEA & IND & ARI & PHI & TEN & BAL & CIN & HOU & PIT & DET & DET\\
+11 & CAR & SEA & MIN & MIN & BUF & PHI & CHR & CIN & IND & NYG & DAL & IND & BAL & DET & MIA & GB\\
+12 & CLE & NOR & HOU & NYG & GB & BUF & WAS & BAL & NYG & ARI & CIN & TEN & PIT & OAK & NOR & DAL\\
+13 & NWE & DEN & JAX & WAS & NYG & TEN & MIN & CHI & KC & PHI & MIN & GB & CIN & NYJ & TAM & ARI\\
+14 & BUF & DAL & CIN & DAL & HOU & HOU & ARI & NYG & MIN & DAL & TEN & DAL & KC & WAS & SEA & TAM\\
+15 & MIA & CHI & DEN & PHI & ATL & TAM & HOU & DAL & JAX & NYJ & NYG & BAL & CHR & HOU & WAS & KC\\
+16 & BAL & BUF & CAR & KC & DEN & WAS & DEN & JAX & BUF & CAR & NOR & NYJ & MIA & NOR & BAL & JAX\\
+17 & DEN & NYJ & NOR & NWE & CIN & DET & TAM & HOU & DET & HOU & TAM & RAM & BUF & IND & BUF & CHR\\
+18 & JAX & PIT & KC & DET & PIT & MIN & CHI & PIT & RAM & CHR & CHR & TAM & MIN & CHI & HOU & WAS\\
+19 & WAS & CLE & OAK & CLE & KC & CHI & NOR & MIA & SFO & MIA & DET & NYG & CAR & TAM & CIN & SEA\\
+20 & SEA & OAK & BAL & MIA & SFO & CAR & PHI & NYJ & CLE & BUF & MIA & DET & CLE & ATL & PHI & SFO\\
+21 & KC & CIN & DAL & CHR & SEA & NOR & SFO & TEN & MIA & OAK & SEA & OAK & CHI & CHR & IND & CHI\\
+22 & RAM & JAX & WAS & ARI & RAM & DEN & NYJ & SEA & CIN & KC & PIT & MIA & NYJ & JAX & MIN & BAL\\
+23 & NYJ & CHR & DET & OAK & MIN & CIN & CIN & DET & OAK & DEN & NYJ & ATL & NYG & PHI & CAR & OAK\\
+24 & CHR & MIN & RAM & TEN & CAR & BAL & CLE & CLE & CHR & CHI & RAM & MIN & ATL & NYG & ARI & NYG\\
+25 & CIN & SFO & TAM & BAL & TAM & NYJ & BUF & BUF & SEA & CLE & BUF & WAS & RAM & BUF & TEN & MIA\\
+26 & ARI & TAM & CHI & SFO & WAS & SFO & KC & CAR & CAR & JAX & ARI & CHI & OAK & DAL & NYJ & TEN\\
+27 & MIN & HOU & TEN & GB & JAX & KC & OAK & KC & ARI & TAM & CAR & PIT & SFO & MIA & CLE & CIN\\
+28 & DET & WAS & SFO & RAM & MIA & OAK & JAX & WAS & DEN & MIN & PHI & JAX & NOR & BAL & CHR & DEN\\
+29 & NOR & ATL & ARI & NOR & CLE & ARI & GB & DEN & TEN & WAS & CLE & HOU & TAM & RAM & JAX & IND\\
+30 & CHI & NYG & MIA & NYJ & OAK & RAM & SEA & OAK & DAL & SEA & OAK & CLE & WAS & CLE & CHI & HOU\\
+31 & HOU & DET & NYG & BUF & ARI & ATL & RAM & RAM & HOU & RAM & KC & CHR & TEN & SFO & SFO & NYJ\\
+32 & DAL & ARI & CLE & HOU & DET & MIA & DET & TAM & WAS & IND & JAX & BUF & JAX & TEN & RAM & CLE\\
+\hline
+\end{tabular}
+\caption{Slater Ranking of teams by season}\label{table:full_slater_ranking}
+\end{center}
+\end{table}
+
 
 \end{document}
