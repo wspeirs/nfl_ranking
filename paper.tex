@@ -10,7 +10,7 @@
 
 \usepackage{algpseudocode}
 \usepackage{algorithm}
-\usepackage{varwidth}
+\usepackage{textcomp}
 
 % these two lines will give you double spacing in the document (only for editing)
 %\usepackage{setspace}
@@ -62,11 +62,15 @@
 
 \section{Introduction}
 
-This is the introduction of a paper.
+Throughout the 17 weeks of an NFL season, many things can happen that alter the performance of a team. For example, in 2007 the New England Patriots went 16-0\cite{ESPN:ne_2007} in the regular season making them one of the best teams in this history of the game. However, in the first game of the 2008 season their MVP quarterback sustained a knee injury that would keep him from playing for the entire 2008 season.\cite{wiki:tom_brady} Their record that season was a still an impressive 11-5\footnote{Tied with the Miami Dolphins for first place in the AFC East.}.\cite{ESPN:ne_2008} While the ability of a team is constantly in flux throughout the season because of injuries, trades, and extra curricular activities off the field, there is an expectation that for any given year, comparing two teams, one can be considered better than the other. There are plenty of instances where two teams play each other twice in a season with each team taking home a win. However, if the teams were to play each other enough times in a given season, it would be expected that one team would generally win more games than the other. Given this expectation, numerous rankings exist to compare teams. People then often use these rankings in an attempt to predict the winner of a game between two NFL teams. This paper examines the ability for any ranking system to predict the outcome of an NFL game.
+
+Throughout this paper the data from the 2002 to the 2017 NFL seasons, inclusive, are used. This provides 16 years worth of data, which is enough to remove any single-year trends or abnormalities. Data before 2002 is not used because there are a different number of teams -- 31 instead of 32 -- before 2002. While the number of teams \emph{probably} would not statistically impact any of the results in this paper, it was easier to analyze years with the same number of teams to prevent any abnormalities.
+
+The first section investigates some common methods to predict the outcome of an NFL game, using these methods as a proxy for how predictable NFL games are in general. In Section \ref{sec:slater} the Slater Ranking is defined, and the application of the Minimum Feedback Arc Set problem to create a Slater Ranking is discussed. Further, an improvement on a linear algorithm for the Minimum Feedback Arc Set problem is discussed. Section \ref{sec:compare} compares the various ranking systems found on the Internet with the optimal Slater Ranking. In all but one instance, the Slater Ranking is more accurate at predicting the winner of an NFL game than the other systems.
 
 \section{The Predictability of an NFL Game}
 
-Before looking at how accurate a ranking system can be in predicting the outcome of an NFL football game, it is good to start by looking at how predictable NFL games are in general. If all NFL games are hard to predict, then there is no reason to think a ranking system will be successful. Unfortunately, there is no quantifiable measure how easy it is to predict the winner of an NFL game before it is played, but there are a number of proxies for the predictability. The most obvious and straightforward is to look at the margin-of-victory, or the absolute difference in the scores. One would expect that if the margin-of-victory of NFL games is large, than it is probably easier to predict the winner before the game is played.
+Before looking at how accurate a ranking system can be in predicting the outcome of an NFL football game, how predictable NFL games are in general is examined. If all NFL games are hard to predict, then there is no reason to think a ranking system will be successful. Unfortunately, there is no quantifiable measure how easy or hard it is to predict the winner of an NFL game before it is played. However, there are a number of proxies for the predictability of an NFL game. The most obvious and straightforward is to look at the margin-of-victory, or the absolute difference in the scores. One would expect that if the margin-of-victory of NFL games is large, than it is probably easier to predict the winner before the game is played.
 
 Examining all of the games played between 2002 and 2017 inclusive, approximately 25\% of NFL games are decided by 3 points or fewer, and in most seasons only eight points decide 50\% of NFL games. The percent of games won by a margin-of-victory or less can be found in Table \ref{table:margin_of_victory}.
 
@@ -122,7 +126,7 @@ MOV & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & 2016 & 2017 \\
 \end{center}
 \end{table}
 
-The mean and median margin-of-victory by year, and for the whole data set, can be found in Table \ref{table:margin_of_victory_stat}. If you consider scoring in an NFL game to come in increments of 3 (a touchdown being $2 \times 3$), then the average game is decided by $4 \times 3$ and the median game by $3 \times 3$. With score differences of 3 and 4, using margin-of-victory as a proxy for the predictability of an NFL game would \emph{seem} to indicate that predicting the outcome of a game is not terribly difficult.
+The mean and median margin-of-victory by year, and for the whole data set, can be found in Table \ref{table:margin_of_victory_stat}. If you consider scoring in an NFL game to come in increments of 3 (a touchdown being $2 \times 3$), then the average game is decided by 4 ``score increments'' and the median game by 3 ``score increments''. With score differences of 3 and 4 ``score increments'', using margin-of-victory as a proxy for the predictability of an NFL game would \emph{seem} to indicate that predicting the outcome of a game is not terribly difficult.
 
 \begin{table}[!htb]
 \begin{center}
@@ -188,7 +192,7 @@ Total & 1192 & 70.90\\
 \end{center}
 \end{table}
 
-Gambling provides us with another proxy of the predictability of an NFL game. While the point spread established by casinos and bookies does not represent an adjustment to the scores to make the outcome equal, it does represent the betting publics consensus on who they think will win the game. Spreads are established to promote an equal amount of money being bet on each teams. With all of the money and ``expertise'' that goes into betting on NFL games, one would think that the favorite would almost always win. However, across the entire data set, the favorite only one 66.85\% of the time. This is 4.05\% worse than going with the team with a higher win/loss ratio. Table \ref{table:favorite_wins} shows the number of upsets and the percent correct year-by-year.
+Gambling provides us with another proxy of the predictability of an NFL game. While the point spread established by casinos and bookies does not represent an adjustment to the scores to make the outcome equal, it does represent the betting public's consensus on who they think will win the game. Spreads are established to promote an equal amount of money being bet on each teams. With all of the money and ``expertise'' that goes into betting on NFL games, one would think that the favorite would almost always win. However, across the entire data set, the favorite only one 66.85\% of the time. This is 4.05\% worse than going with the team with a higher win/loss ratio. Table \ref{table:favorite_wins} shows the number of upsets and the percent correct year-by-year.
 
 \begin{table}[!htb]
 \begin{center}
@@ -221,7 +225,7 @@ Total & 1358 & 66.85\\
 \end{center}
 \end{table}
 
-One last proxy for how easy it is to predict the outcome of an NFL game, is to look at how often a team beats another team twice in the same season. If teams are consistent in there performances, then predicting the outcome is easy: the same team should win twice-in-a-row. However, across the entire data set, that only occurs 57.91\% of the time. Table \ref{table:won_twice} has the year-by-year stats.
+One last proxy for how easy it is to predict the outcome of an NFL game, is to look at how often a team beats another team twice in the same season. If teams are consistent in there performances, then predicting the outcome is easy: the same team should win both times they play. However, across the entire data set, that only occurs 57.91\% of the time. Table \ref{table:won_twice} has the year-by-year stats.
 
 \begin{table}[!htb]
 \begin{center}
@@ -254,21 +258,23 @@ Total & 57.91\\
 \end{center}
 \end{table}
 
-Given that the average NFL game from 2002 to 2017 was won by over 11 points, the team that has a better win/loss ratio won 70\% of the time, and the favorite won 67\% of the time, one could conclude that predicting the winner of an NFL game more often than not is possible. It still remains if using rankings, made up of a number of factors, is a good way to predict the outcome.
+Given that the average NFL game from 2002 to 2017 was won by over 11 points, the team that has a better win/loss ratio won 70\% of the time, and the favorite won 67\% of the time, one could conclude that predicting the winner of an NFL game more often than not is possible.
 
-\section{Slater Ranking and the Minimum Feedback Arc Set}
+\section{Slater Ranking and the Minimum Feedback Arc Set}\label{sec:slater}
 
-In \cite{biometrika_slater} Patric Slater introduced a rule for computing a ranking given an inconsistent set of preferences for paired comparisons. Preferences are never inconsistent across the same pairs of choices, but do not following the property of transitivity. His rule is to rank alternatives such that the number of pairs that disagree with the ranking is minimized. In applying Slater's rule to NFL games, consider two teams playing each other the comparison, and the preference the winner of the game. The goal is to derive a ranking of the teams such that the number of upsets, where a higher ranked team loses to a lower ranked team, is minimized. Slater Ranking, for the purposes of this paper, is defined in Definition \ref{def:slater_ranking}. Such a ranking is the optimal ranking for a given season, and is used to compare against various other rankings in Section \ref{section:comparison}.
+Before looking at specific ranking systems found on the Internet, a hypothetical and optimal ranking system is considered. Instead of trying to predict the outcome of a game before it is played, the records of all teams for the entire season are examined, and a rank compiled for all teams based upon their season record. This provides a theoretical ``best ranking'' for a given season. Besides using an entire season's data to formulate the ranking, this optimal ranking does not have the ability to change week-over-week like the ranking systems found on the Internet.
+
+In \cite{biometrika_slater} Patrick Slater introduced a rule for computing a ranking given an inconsistent set of preferences for paired comparisons. Preferences are never inconsistent across the same pairs of choices, but do not following the property of transitivity. His rule is to rank alternatives such that the number of pairs that disagree with the ranking is minimized. In applying Slater's rule to NFL games, consider two teams playing each other the paired comparison, and the preference the winner of the game. The goal is to derive a ranking of the teams such that the number of upsets, where a higher ranked team loses to a lower ranked team, is minimized. A Slater Ranking, for the purposes of this paper, is defined in Definition \ref{def:slater_ranking}. Such a ranking is the optimal ranking for a given season, and is used to compare against various rankings in Section \ref{sec:compare}.
 
 \begin{definition}\label{def:slater_ranking}
-Given a ranking of the teams in a given NFL season, if $i < j$, then team $i$ is ranked higher (is a better team) than team $j$. An upset occurs when a team, $T_j$, with a worse ranking beats a team, $T_i$, with a better ranking. A Slater Ranking is the ranking of all teams for a given season that minimizes the number of upsets, or occurrences when $T_j$ beats $T_i$ in the season.
+Given a ranking of the teams in a given NFL season, if $i < j$, then team $i$ is ranked higher (is a better team) than team $j$. An upset occurs when a team, $T_j$, with a worse ranking beats a team, $T_i$, with a better ranking. A Slater Ranking is the ranking of all teams for a given season that minimizes the number of upsets, or occurrences when $T_j$ beats $T_i$.
 \end{definition}
 
-One way to compute the Slater Ranking for a given NFL season, is to consider each team a node in a directed graph, an edge from one node to another an indication of a victory, and then to compute the Minimum Feedback Arc Set (MFAS). The MFAS is the fewest number of edges that must be removed from the graph to remove all cycles from the graph. In our case, a graph with no cycles would establish an ordering, or ranking of the teams such that there are no upsets. This ranking is equivalent to the Slater Ranking defined in Definition \ref{def:slater_ranking}.
+One way to compute the Slater Ranking for a given NFL season is to consider each team a node in a directed graph, an edge from one node to another an indication of a victory, and then to compute the Minimum Feedback Arc Set (MFAS). The MFAS is the fewest number of edges that must be removed from the graph to remove all cycles from the graph. In our case, a graph with no cycles would establish an ordering, or ranking, of the teams such that there are no upsets. This ranking is equivalent to the Slater Ranking defined in Definition \ref{def:slater_ranking}.
 
-Unfortunately, the MFAS is an NP-hard problem; its NP-complete version was one of Karp's original 21 NP-complete problems \cite{karp_complexity}. Computing an exact solution with 32 teams would require testing all $32! \approx 2^{117}$ possible rankings of the teams. This is obviously computationally infeasible with today's computers, so an approximation algorithm must be used. Unfortunately, again, MFAS falls into the APX-hard complexity class \cite{kann_approx}, which means that every polynomial-time approximation algorithm will sometimes return an edge set that is $c$ times larger than optimal for some $c > 1$.
+Unfortunately, the MFAS problem is an NP-hard problem; its NP-complete version was one of Karp's original 21 NP-complete problems \cite{karp_complexity}. Computing an exact solution with 32 teams would require testing all $32! \approx 2^{117}$ possible rankings of the teams. This is obviously computationally infeasible with today's computers, so an approximation algorithm must be used. Unfortunately, again, MFAS falls into the APX-hard complexity class \cite{kann_approx}, which means that every polynomial-time approximation algorithm will sometimes return an edge set that is $c$ times larger than optimal for some $c > 1$.
 
-Despite these setbacks, the linear approximation algorithm in \cite{Saab2001} was used to compute the Slater Ranking for the teams for each year from 2002 to 2017 inclusive. A small modification to the algorithm was made to increase the accuracy of the algorithm, at the cost of additional searching. The original algorithm picks a node $u$ with the maximum $\delta(u)$, where $\delta(u) = \text{out degree}(u) - \text{in degree}(u)$. There is no mention in \cite{Saab2001} of breaking ties amongst nodes that share the maximum $\delta$. The modification used in this paper explores a fixed number of such nodes. The exploration is limited to at most 4 nodes. The value of 4 was used based upon experimentation with the graphs constructed for each NFL season, to limit the number of paths explored to a reasonable number. The modified approximation algorithm returns a set of possible rankings, and is defined in Algorithm \ref{algo:slater_ranking}. The number of upsets for each ranking is computed, and the ranking with the fewest upsets is used as the Slater Ranking for that season. It should be noted that there is still an element of randomness to the algorithm, as there are often more than 4 nodes that all share the maximum $\delta$. The first 4 nodes are used, but as there is no ordering to the nodes, results will differ.
+Despite these setbacks, the linear approximation algorithm in \cite{Saab2001} was used to compute the Slater Ranking for the teams for each year from 2002 to 2017 inclusive. Despite approximation algorithms being in APX-hard, as stated in \cite{Saab2001}, the linear algorithm chosen achieves asymptotically optimal results when used with sparse graphs like those found in an NFL season. To further improve this algorithm, a small modification was made that search more possible rankings than the original. The original algorithm picks a node $u$ with the maximum $\delta(u)$, where $\delta(u) = \text{out degree}(u) - \text{in degree}(u)$. There is no mention in \cite{Saab2001} of breaking ties amongst nodes that share the maximum $\delta$. The modification used in this paper explores a fixed number of such nodes. The exploration is limited to at most 4 nodes. The value of 4 was used based upon experimentation with the graphs constructed for each NFL season, to limit the number of paths explored to a reasonable number. The modified approximation algorithm returns a set of possible rankings, and is defined in Algorithm \ref{algo:slater_ranking}. The number of upsets for each ranking is computed, and the ranking with the fewest upsets is used as the Slater Ranking for that season. It should be noted that there is still an element of randomness to the algorithm, as there are often more than 4 nodes that all share the maximum $\delta$. The first 4 nodes are used, but as there is no ordering to the nodes, results will differ.
 
 \begin{algorithm}[!htb]
 \texttt{slater\_rank}($G$, $s_1$, $s_2$):\newline
@@ -287,19 +293,21 @@ Despite these setbacks, the linear approximation algorithm in \cite{Saab2001} wa
 
 \hspace*{4em} \texttt{if} $G \ne \varnothing$:\newline
 \hspace*{6em} $U$ = all nodes $u$ for which $\delta(u)$ is the maximum\newline
-\hspace*{6em} \texttt{for} $i = 0 \ldots 4$:\newline
+\hspace*{6em} \texttt{for} $i = 0 \ldots \texttt{max}(4, |U|)$:\newline
 \hspace*{8em} $s_{1 new} \gets s_1 \parallel U_i$\newline
 \hspace*{8em} $G_{new} \gets G - U_i$\newline
-\hspace*{8em} $R \gets$ \texttt{slater\_rank}($G_{new}$, $s_{1new}$, $s_2$)\newline
+\hspace*{8em} $R \gets$ \texttt{slater\_rank}($G_{new}$, $s_{1new}$, $s_2$) $\parallel R$ \newline
 
 \hspace*{2em} \texttt{return} $R$\newline
 \caption{Modified approximation algorithm that finds a set of candidate Slater Rankings for an NFL season.}\label{algo:slater_ranking}
 \end{algorithm}
 
+Because the algorithm explores more than a single ranking, it is able to find rankings where the number of upsets are reduced. For example, in the 2004 season, exploring only 3 nodes that have the maximum $\delta$ versus 4 nodes results in a ranking that includes one more upset. However, for most of the seasons, the number of upsets when exploring 3 or 4 nodes were the same. To come even closer to the optimal Slater Ranking, more than 4 nodes with the maximum $\delta$ can be searched. However, the number of rankings becomes large quickly. For example, the 2002 season went from 35,677 rankings to 56,652 rankings when increasing the number of nodes from 3 to 4.
 
-\section{Comparing Various Ranking Systems to the Slater Ranking}
 
-Running the algorithm described in \ref{algo:slater_ranking} for each year results in the data found in Table \ref{table:slater_ranking_year}.\footnote{For the actual ranking of the teams, see Table \ref{table:full_slater_ranking} in \ref{app:slater_ranking}.} Across the entire data set, the Slater Ranking was correct 77.98\% of the time. The best ranking system for each year found at \cite{} is compared year-by-year to the Slater Ranking to see how they compare. The results can be found in Table \ref{}.
+\section{Comparing Various Ranking Systems to the Slater Ranking}\label{sec:compare}
+
+The number of upsets and the number of games predicted correctly using the Slater Ranking described in Algorithm \ref{algo:slater_ranking} can be found in Table \ref{table:slater_ranking_year}.\footnote{For the actual ranking of the teams, see Table \ref{table:full_slater_ranking} in \ref{app:slater_ranking}.} Across the entire data set, the Slater Ranking was correct 77.98\% of the time.
 
 \begin{table}[!htb]
 \begin{center}
@@ -332,75 +340,75 @@ Year & Upsets & \% Correct\\
 \end{center}
 \end{table}
 
-
-Below are the top raking systems, and their percent correct by year
-
-%
-% This is wrong... the spread bests are different
-% 
+Comparing the Slater Ranking to the various ranking systems found in \cite{prediction_tracker}, the Slater Ranking was more accurate at predicting the outcome of an NFL game for all years but one, 2004. Table \ref{table:ranking_year} shows the percent of games accurately predicted with the best system for that year, and the Slater Ranking for that year.
 
 \begin{table}[!htb]
 \begin{center}
 \scriptsize
-\begin{tabular}{|c|l|c|c|}
+\begin{tabular}{|c|l|c|c|c|}
 \hline
-Year & \multicolumn{1}{|c|}{System} & \% Correct & Against Spread\\
+Year & \multicolumn{1}{|c|}{Ranking Name} & \% Correct & Slater Ranking & Difference\\
 \hline
-2000 & PFZ w/team HFA & 67.5 & 50.0\\
-2001 & CPA Retro Rankings & 69.1 & 52.2\\
-2002 & Logistic Regression & 68.2 & 57.2\\
-2003 & Jeff Self & 68.9 & 50.2\\
-2004 & The Sports Report & 79.4 & 55.4\\
-2005 & Line (updated) & 72.2 & 00.0\\
-2006 & Least Abs. Val Reg & 62.5 & 49.8\\
-2007 & Cover81 & 72.0 & 58.2\\
-2008 & Jeff Self & 68.4 & 50.6\\
-2009 & JFM Power Ratings & 69.2 & 52.1\\
-2010 & Cover81 & 66.0 & 51.2\\
-2011 & Nationalsportsrankings & 69.7 & 52.3\\
-2012 & Bihl Rankings & 71.9 & 50.0\\
-2013 & Ironrank.com & 71.4 & 63.4\\
-2014 & Dokter Entropy & 71.4 & 50.9\\
-2015 & Sagarin Golden Mean & 65.9 & 55.9\\
-2016 & Bihl Rankings & 69.4 & 42.9\\
-2017 & Bihl Rankings & 71.0 & 53.5\\
+2002 & Logistic Regression & 68.2 & 75.78 & 7.58\\
+2003 & Jeff Self & 68.9 & 77.73 & 8.83\\
+2004 & The Sports Report & 79.4 & 78.53 & \textbf{-0.87}\\
+2005 & Line (updated) & 72.2 & 80.86 & 8.66\\
+2006 & Least Abs. Val Reg & 62.5 & 76.17 & 13.67\\
+2007 & Cover81 & 72.0 & 80.86 & 8.86\\
+2008 & Jeff Self & 68.4 & 76.95 & 8.55\\
+2009 & JFM Power Ratings & 69.2 & 78.12 & 8.92\\
+2010 & Cover81 & 66.0 & 76.17 & 10.17\\
+2011 & Nationalsportsrankings & 69.7 & 78.52 & 8.82\\
+2012 & Bihl Rankings & 71.9 & 76.56 & 4.66\\
+2013 & Ironrank.com & 71.4 & 75.78 & 4.38\\
+2014 & Dokter Entropy & 71.4 & 79.69 & 8.29\\
+2015 & Sagarin Golden Mean & 65.9 & 76.56 & 10.66\\
+2016 & Bihl Rankings & 69.4 & 78.19 & 8.79\\
+2017 & Bihl Rankings & 71.0 & 81.25 & 10.25\\
 \hline
- & \multicolumn{1}{|r|}{\textbf{Average}} & 69.7 & 49.8\\
- & \multicolumn{1}{|r|}{\textbf{Median}} & 69.3 & 51.7\\
+ & \multicolumn{1}{|r|}{\textbf{Mean}} & 69.7 & 77.98 & 8.14\\
 \hline
 \end{tabular}
 \caption{Best Ranking System by Year}\label{table:ranking_year}
 \end{center}
 \end{table}
 
-
-\section{Optimal Final Ranking}\label{section:comparison}
-
-Throughout the 17 weeks of an NFL season, many things can happen that alter the performance of a team. For example, in 2007 the New England Patriots went 16-0\cite{ESPN:ne_2007} in the regular season making them one of the best teams in this history of the game. However, in the first game of the 2008 season their MVP quarterback sustained a knee injury that would keep him from playing for the entire 2008 season.\cite{wiki:tom_brady} Their record that season was a still impressive 11-5\footnote{Tied with the Miami Dolphins for first place in the AFC East.}.\cite{ESPN:ne_2008} While the ability of a team is constantly in flux throughout the season because of injuries, trades, and extra curricular activites off the field, there is an expectation that for any given year, comparing two teams once can be considered better than the other. There are plenty of instances where two teams play each other twice in a season with each team taking home a win. However, if the teams were to play each other enough times in a given season, it would be expected that one team would generally win more games than the other.
-
-As such, an optimal ranking for a given year can be constructed such that the fewest number of upsets are allowed. These types of rankings are typically called a Slater Ranking \cite{biometrika_slater} or a Feedback Arc Set \cite{combinatorics_charbit} \cite{discrete_math_alon}, and are defined for the purposes of this paper in Definition \ref{def:slater_ranking}.
-
-\begin{definition}\label{def:slater_ranking}
-Given a ranking of the teams in a given NFL season, where $i < j$, team $i$ is ranked as a better team than team $j$. The notation $T_i \rightarrow T_j$ is used to denote team $T_i$ beating team $T_j$. A Slater Ranking is a ranking that minimizes the occurances of $T_j \rightarrow T_i$ in the season.
-\end{definition}
-
-Unfortunately, finding a Slater Ranking is an NP-Hard problem \cite{combinatorics_charbit} \cite{discrete_math_alon}. Therefore, constructing a perfectly optimal ranking would require finding the minimum number of upsets after testing $32! \approx 2.63 \times 10^{35}$ different rankings. To make the problem tractible, a greedy algorithm was used after exhausting all possible combinations and permutations of three teams occupying the top three spots in the ranking. The greedy algorithm takes the team with the fewest number of losses, excluding losses to teams already ranked, and assigns that team the next ranking. This resulted in picking the ranking that resulted in the minimum number of upsets after considering 29,760 rankings\footnote{In 2000 and 2001 there were only 31 NFL teams, reducing the number of rankings to 26,970.} for each season. The results of these rankings can be found in Table \ref{table:optimal_ranking}.
+While one would initially believe that a ranking that can be constructed using all of the season's data \emph{should} be better than ranking system without this advantage, the various systems found at \cite{prediction_tracker} are able to change their rankings from week-to-week. Going back to the New England Patriots 2008 season, the Slater Ranking cannot take into account the fact that a key player is out for the entire season, except that the result is reflected in that team's overall win/loss record. Whereas, any of the ranking systems found at \cite{prediction_tracker} can 
 
 
+\section{Conclusion}
 
-\begin{itemize}
-\item Talk about NP-Hard problem, and our pseudo-solution
-\item Compute optimal ranking for each year
-\item Compare with \\% of games that ``could have been predicted''
-\end{itemize}
 
-\section{Optimal Week-by-Week Ranking}
-
-\begin{itemize}
-\item Is this an NP-Hard problem?
-\item Compute perfect ranking each week (for each year) with the fewest moves from week-to-week
-\item Compare to a simple score-based ranking
-\end{itemize}
+\begin{table}[!htb]
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|l|c|c|c|c|}
+\hline
+Year & \multicolumn{1}{|c|}{Ranking Name} & Ranking & Slater & Win/Loss & Favorite\\
+\hline
+2002 & Logistic Regression & 68.2 & 75.78 & 67.19 & 62.89\\
+2003 & Jeff Self & 68.9 & 77.73 & 71.88 & 67.58\\
+2004 & The Sports Report & 79.4 & 78.53 & 71.09 & 65.62\\
+2005 & Line (updated) & 72.2 & 80.86 & 73.83 & 74.22\\
+2006 & Least Abs. Val Reg & 62.5 & 76.17 & 69.14 & 59.38\\
+2007 & Cover81 & 72 & 80.86 & 74.61 & 69.14\\
+2008 & Jeff Self & 68.4 & 76.95 & 71.88 & 68.75\\
+2009 & JFM Power Ratings & 69.2 & 78.12 & 70.31 & 69.53\\
+2010 & Cover81 & 66 & 76.17 & 66.41 & 66.02\\
+2011 & Nationalsportsrankings & 69.7 & 78.52 & 71.48 & 66.41\\
+2012 & Bihl Rankings & 71.9 & 76.56 & 70.31 & 64.45\\
+2013 & Ironrank.com & 71.4 & 75.78 & 70.31 & 69.14\\
+2014 & Dokter Entropy & 71.4 & 79.69 & 73.83 & 67.97\\
+2015 & Sagarin Golden Mean & 65.9 & 76.56 & 69.92 & 63.28\\
+2016 & Bihl Rankings & 69.4 & 78.19 & 71.09 & 64.45\\
+2017 & Bihl Rankings & 71 & 81.25 & 71.09 & 70.7\\
+\hline
+ & \multicolumn{1}{|r|}{\textbf{Mean}} & 69.84 & 77.98 & 70.90 & 66.85\\
+\hline
+\end{tabular}
+\caption{Best Ranking System by Year}\label{table:ranking_year}
+\end{center}
+\end{table}
 
 
 \newpage
